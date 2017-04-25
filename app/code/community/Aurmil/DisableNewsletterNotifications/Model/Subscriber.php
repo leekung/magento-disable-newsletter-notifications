@@ -4,9 +4,12 @@
  * @link https://github.com/aurmil/magento-disable-newsletter-notifications
  * @license https://github.com/aurmil/magento-disable-newsletter-notifications/blob/master/LICENSE.md
  */
-
-class Aurmil_DisableNewsletterNotifications_Model_Subscriber
-extends Mage_Newsletter_Model_Subscriber
+if (Mage::helper('core')->isModuleEnabled('AW_Followupemail') && class_exists('AW_Followupemail_Model_Subscriber')) {
+    class Aurmil_DisableNewsletterNotifications_Model_Subscriber_Wrapper extends AW_Followupemail_Model_Subscriber {}
+} else {
+    class Aurmil_DisableNewsletterNotifications_Model_Subscriber_Wrapper extends Mage_Newsletter_Model_Subscriber {}
+}
+class Aurmil_DisableNewsletterNotifications_Model_Subscriber extends Aurmil_DisableNewsletterNotifications_Model_Subscriber_Wrapper
 {
     public function sendConfirmationRequestEmail()
     {
